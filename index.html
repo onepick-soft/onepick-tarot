@@ -555,6 +555,41 @@
                   </div>
                 </div>
 
+                <!-- 3. 사용 가이드 -->
+                <div class="p-5 bg-blue-900/10 border border-blue-500/20 rounded-xl">
+                  <h3 class="text-base font-bold text-blue-400 mb-4 flex items-center gap-2">
+                    <i class="ph-fill ph-info"></i> 설정 가이드
+                  </h3>
+                  <div class="space-y-4 text-sm text-gray-400 leading-relaxed">
+                    <div class="bg-black/20 p-3 rounded-lg">
+                      <strong class="text-amber-500 block mb-1 text-sm"><i class="ph-bold ph-warning"></i> 서버 점검
+                        모드</strong>
+                      <p>이 기능을 켜면 <strong>관리자를 제외한 모든 사용자</strong>의 앱 화면이 점검 안내창으로 고정됩니다. 긴급 수정이나 서버 DB 작업 시 사용하세요.</p>
+                    </div>
+
+                    <div class="bg-black/20 p-3 rounded-lg">
+                      <strong class="text-green-500 block mb-1 text-sm"><i class="ph-bold ph-arrows-clockwise"></i> 버전
+                        관리 규칙</strong>
+                      <ul class="space-y-2 mt-2">
+                        <li class="flex gap-2">
+                          <span
+                            class="text-red-400 font-bold whitespace-nowrap text-xs bg-red-900/30 px-2 py-0.5 rounded h-fit">강제</span>
+                          <span>사용자 버전 &lt; <strong>최소 버전</strong> 이면, 업데이트할 때까지 앱 사용이 <strong>불가능</strong>합니다.</span>
+                        </li>
+                        <li class="flex gap-2">
+                          <span
+                            class="text-blue-400 font-bold whitespace-nowrap text-xs bg-blue-900/30 px-2 py-0.5 rounded h-fit">권장</span>
+                          <span>사용자 버전 &lt; <strong>최신 버전</strong> 이면, 팝업이 뜨지만 <strong>'다음에 하기'</strong>가 가능합니다.</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="text-xs text-center pt-2 opacity-60">
+                      * 설정은 저장 버튼을 누르는 즉시 사용자 앱에 실시간으로 반영됩니다.
+                    </div>
+                  </div>
+                </div>
+
                 <button id="save-btn" onclick="saveConfig()"
                   class="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl font-bold text-lg hover:brightness-110 transition-all shadow-lg">
                   설정 저장하기
@@ -664,7 +699,6 @@
                 configSection.classList.add("hidden");
               }
             });
-          </script> });
           </script>
 </body>
 
