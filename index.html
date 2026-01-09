@@ -478,11 +478,15 @@
           <!-- Admin Settings Panel -->
           <div id="admin-panel" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-md overflow-y-auto">
             <div class="max-w-2xl mx-auto my-10 bg-[#1a1a2e] border border-white/10 rounded-2xl p-6 relative">
+              <button onclick="handleAdminLogout()" id="admin-logout-btn"
+                class="absolute top-6 left-6 text-red-500 hover:text-red-400 font-bold text-sm hidden">
+                <i class="ph-bold ph-sign-out"></i> 로그아웃
+              </button>
               <button onclick="toggleAdminPanel()" class="absolute top-4 right-4 text-white/50 hover:text-white">
                 <i class="ph-bold ph-x text-2xl"></i>
               </button>
 
-              <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+              <h2 class="text-2xl font-bold mb-6 flex items-center justify-center gap-2">
                 <i class="ph-fill ph-lock-key text-purple-500"></i> 앱 제어 센터
               </h2>
 
@@ -522,8 +526,9 @@
 
                 <!-- 2. 안드로이드 버전 관리 -->
                 <div class="p-5 bg-white/5 border border-white/10 rounded-xl">
-                  <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center gap-2">
-                    <i class="ph-fill ph-android-logo"></i> Android 설정
+                  <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center justify-between">
+                    <span class="flex items-center gap-2"><i class="ph-fill ph-android-logo"></i> Android 설정</span>
+                    <div id="current-config-status"></div>
                   </h3>
                   <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
@@ -627,6 +632,15 @@
               }
             }
 
+            async function handleAdminLogout() {
+              try {
+                await auth.signOut();
+                alert("로그아웃 되었습니다.");
+              } catch (error) {
+                alert("로그아웃 실패: " + error.message);
+              }
+            }
+
             function toggleAdminPanel() {
               const panel = document.getElementById("admin-panel");
               panel.classList.toggle("hidden");
@@ -650,9 +664,21 @@
               // Android
               document.getElementById("android-min").value = data.android?.minVersion || "";
               document.getElementById("android-latest").value = data.android?.latestVersion || "";
-              document.getElementById("android-url").value = data.android?.storeUrl || "";
+              // Set default store URL if empty, otherwise use saved value
+              const defaultStoreUrl = "https://play.google.com/store/apps/details?id=com.onepick.tarot";
+              document.getElementById("android-url").value = data.android?.storeUrl || defaultStoreUrl;
               document.getElementById("android-msg").value = data.android?.message || "";
               document.getElementById("android-rec").checked = data.android?.showRecommended || false;
+
+              // Display Current Config Status
+              const currentStatusDiv = document.getElementById("current-config-status");
+              if (currentStatusDiv) {
+                const minVer = data.android?.minVersion || "미설정";
+                const lastVer = data.android?.latestVersion || "미설정";
+                currentStatusDiv.innerHTML = `
+                    <span class="text-xs text-gray-400 bg-white/5 px-2 py-1 rounded">현재 저장된 설정: 강제 ${minVer} / 권장 ${lastVer}</span>
+                  `;
+              }
             }
 
             async function saveConfig() {
@@ -688,15 +714,23 @@
             auth.onAuthStateChanged((user) => {
               const loginSection = document.getElementById("admin-login-section");
               const configSection = document.getElementById("admin-config-section");
+              const logoutBtn = document.getElementById("admin-logout-btn");
 
               if (user && user.email === "ljb2727@gmail.com") {
                 loginSection.classList.add("hidden");
                 configSection.classList.remove("hidden");
+
+                // Show Logout Button
+                if (logoutBtn) logoutBtn.classList.remove("hidden");
+
                 loadConfig();
               } else {
                 // Not admin
                 loginSection.classList.remove("hidden");
                 configSection.classList.add("hidden");
+
+                // Hide Logout Button
+                if (logoutBtn) logoutBtn.classList.add("hidden");
               }
             });
           </script>
