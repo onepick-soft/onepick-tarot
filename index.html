@@ -524,37 +524,35 @@
                   </div>
                 </div>
 
-                <!-- 2. 안드로이드 버전 관리 -->
+                <!-- 2. 안드로이드 업데이트 관리 -->
                 <div class="p-5 bg-white/5 border border-white/10 rounded-xl">
                   <h3 class="text-xl font-bold text-green-400 mb-4 flex flex-col gap-2">
                     <div class="flex items-center justify-between">
                       <span class="flex items-center gap-2">
-                        <i class="ph-fill ph-android-logo"></i> Android 설정
-                        <span id="current-build-version"
-                          class="text-xs font-normal text-gray-500 bg-gray-800 px-2 py-1 rounded border border-gray-700">최신
-                          빌드 확인 중...</span>
+                        <i class="ph-fill ph-android-logo"></i> Android 업데이트 설정
                       </span>
+                      <span id="current-build-version"
+                        class="text-xs font-normal text-gray-500 bg-gray-800 px-2 py-1 rounded border border-gray-700">최신
+                        빌드 확인 중...</span>
                     </div>
-                    <div id="current-config-status" class="text-right"></div>
                   </h3>
-                  <div class="grid grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <label class="text-xs text-gray-400 block mb-1">최소 버전 (강제)</label>
-                      <input type="text" id="android-min"
-                        class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white">
+
+                  <div class="mb-6 p-4 bg-green-900/10 border border-green-500/20 rounded-lg">
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="font-bold text-white">강제 업데이트 모드</span>
+                      <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="android-force" class="sr-only peer">
+                        <div
+                          class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500">
+                        </div>
+                      </label>
                     </div>
-                    <div>
-                      <label class="text-xs text-gray-400 block mb-1">최신 버전 (권장)</label>
-                      <input type="text" id="android-latest"
-                        class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white">
-                    </div>
+                    <p class="text-xs text-gray-400">
+                      * 켜기: 스토어에 새 버전이 있으면 <strong>업데이트 할 때까지 앱 사용이 불가능</strong>합니다.<br>
+                      * 끄기: 업데이트 알림창이 뜨지만 <strong>'다음에 하기'</strong>로 닫을 수 있습니다.
+                    </p>
                   </div>
-                  <div class="mb-4">
-                    <label class="flex items-center gap-2 text-sm text-gray-400 cursor-pointer">
-                      <input type="checkbox" id="android-rec" class="accent-green-500 w-4 h-4">
-                      권장 업데이트 팝업 표시
-                    </label>
-                  </div>
+
                   <div class="mb-4">
                     <label class="text-xs text-gray-400 block mb-1">스토어 링크</label>
                     <input type="text" id="android-url"
@@ -562,45 +560,24 @@
                       value="https://play.google.com/store/apps/details?id=com.onepick.tarot">
                   </div>
                   <div>
-                    <label class="text-xs text-gray-400 block mb-1">업데이트 메시지</label>
+                    <label class="text-xs text-gray-400 block mb-1">안내 메시지</label>
                     <textarea id="android-msg"
-                      class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white h-20"></textarea>
+                      class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white h-20"
+                      placeholder="예: 새로운 기능이 추가되었습니다. 최신 버전으로 업데이트 해주세요."></textarea>
                   </div>
                 </div>
 
-                <!-- 3. 사용 가이드 -->
+                <!-- 3. 도움말 (간소화) -->
                 <div class="p-5 bg-blue-900/10 border border-blue-500/20 rounded-xl">
-                  <h3 class="text-base font-bold text-blue-400 mb-4 flex items-center gap-2">
-                    <i class="ph-fill ph-info"></i> 설정 가이드
+                  <h3 class="text-base font-bold text-blue-400 mb-2 flex items-center gap-2">
+                    <i class="ph-fill ph-info"></i> 도움말
                   </h3>
-                  <div class="space-y-4 text-sm text-gray-400 leading-relaxed">
-                    <div class="bg-black/20 p-3 rounded-lg">
-                      <strong class="text-amber-500 block mb-1 text-sm"><i class="ph-bold ph-warning"></i> 서버 점검
-                        모드</strong>
-                      <p>이 기능을 켜면 <strong>관리자를 제외한 모든 사용자</strong>의 앱 화면이 점검 안내창으로 고정됩니다. 긴급 수정이나 서버 DB 작업 시 사용하세요.</p>
-                    </div>
-
-                    <div class="bg-black/20 p-3 rounded-lg">
-                      <strong class="text-green-500 block mb-1 text-sm"><i class="ph-bold ph-arrows-clockwise"></i> 버전
-                        관리 규칙</strong>
-                      <ul class="space-y-2 mt-2">
-                        <li class="flex gap-2">
-                          <span
-                            class="text-red-400 font-bold whitespace-nowrap text-xs bg-red-900/30 px-2 py-0.5 rounded h-fit">강제</span>
-                          <span>사용자 버전 &lt; <strong>최소 버전</strong> 이면, 업데이트할 때까지 앱 사용이 <strong>불가능</strong>합니다.</span>
-                        </li>
-                        <li class="flex gap-2">
-                          <span
-                            class="text-blue-400 font-bold whitespace-nowrap text-xs bg-blue-900/30 px-2 py-0.5 rounded h-fit">권장</span>
-                          <span>사용자 버전 &lt; <strong>최신 버전</strong> 이면, 팝업이 뜨지만 <strong>'다음에 하기'</strong>가 가능합니다.</span>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div class="text-xs text-center pt-2 opacity-60">
-                      * 설정은 저장 버튼을 누르는 즉시 사용자 앱에 실시간으로 반영됩니다.
-                    </div>
-                  </div>
+                  <p class="text-sm text-gray-400 leading-relaxed">
+                    이제 별도의 버전 입력이 필요 없습니다. 앱이 실행될 때 자동으로 <strong>구글 플레이 스토어</strong>를 확인하여, 설치된 버전보다 스토어 버전이 높으면 업데이트
+                    알림을 띄웁니다.
+                    <br><br>
+                    위의 <strong>'강제 업데이트 모드'</strong> 스위치로 알림창을 강제로 고정할지, 닫기를 허용할지만 결정하시면 됩니다.
+                  </p>
                 </div>
 
                 <button id="save-btn" onclick="saveConfig()"
@@ -670,7 +647,8 @@
             async function fetchLatestBuildVersion() {
               const el = document.getElementById("current-build-version");
               try {
-                const response = await fetch('https://raw.githubusercontent.com/ljbhan/tarot/main/android/app/build.gradle');
+                // User repo: ljb2727/tarot
+                const response = await fetch('https://raw.githubusercontent.com/ljb2727/tarot/main/android/app/build.gradle');
                 if (!response.ok) throw new Error("Failed");
                 const text = await response.text();
 
@@ -679,13 +657,11 @@
                 if (match && match[1]) {
                   el.innerText = `GitHub Main: ${match[1]}`;
                   el.classList.add("text-blue-400");
-
-                  // Optional: Auto-fill if inputs are empty? Can be annoying. Just show it.
                 } else {
                   el.innerText = "버전 파싱 실패";
                 }
               } catch (e) {
-                console.error(e);
+                console.error("GitHub Fetch Error:", e);
                 el.innerText = "GitHub 확인 불가";
               }
             }
