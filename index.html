@@ -1,424 +1,370 @@
 <!DOCTYPE html>
 <html lang="ko" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>원픽타로 - AI가 알려주는 당신의 운명</title>
-    <meta
-      name="description"
-      content="불안한 미래, 더 이상 혼자 고민하지 마세요. AI 타로마스터가 당신의 고민을 듣고 명쾌한 해답을 제시합니다."
-    />
-    <meta property="og:title" content="원픽타로 - AI 타로 상담" />
-    <meta
-      property="og:description"
-      content="오늘의 운세부터 짝사랑, 재회운까지. 원픽타로에서 확인하세요."
-    />
-    <meta
-      property="og:image"
-      content="https://onepick-soft.github.io/onepick-tarot/og-image.png"
-    />
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Phosphor Icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <!-- Google Fonts: Pretendard -->
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css"
-    />
 
-    <style>
-      body {
-        font-family: "Pretendard Variable", Pretendard, -apple-system,
-          BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
-          "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
-          "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>원픽타로 - AI가 알려주는 당신의 운명</title>
+  <meta name="description" content="불안한 미래, 더 이상 혼자 고민하지 마세요. AI 타로마스터가 당신의 고민을 듣고 명쾌한 해답을 제시합니다." />
+  <meta property="og:title" content="원픽타로 - AI 타로 상담" />
+  <meta property="og:description" content="오늘의 운세부터 짝사랑, 재회운까지. 원픽타로에서 확인하세요." />
+  <meta property="og:image" content="https://onepick-soft.github.io/onepick-tarot/og-image.png" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Google Fonts: Pretendard -->
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.css" />
+
+  <style>
+    body {
+      font-family: "Pretendard Variable", Pretendard, -apple-system,
+        BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+        "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .glass-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .shooting-star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: shoot 3s linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes shoot {
+      0% {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
       }
-      .glass {
-        background: rgba(255, 255, 255, 0.03);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-      }
-      .glass-card:hover {
-        background: rgba(255, 255, 255, 0.06);
-        border-color: rgba(255, 255, 255, 0.1);
-        transform: translateY(-2px);
-      }
-      .gradient-text {
-        background: linear-gradient(135deg, #c084fc 0%, #a855f7 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .shooting-star {
-        position: absolute;
-        width: 2px;
-        height: 2px;
-        background: white;
-        border-radius: 50%;
-        animation: shoot 3s linear infinite;
+
+      100% {
+        transform: translateX(-100px) translateY(100px);
         opacity: 0;
       }
-      @keyframes shoot {
-        0% {
-          transform: translateX(0) translateY(0);
-          opacity: 1;
-        }
-        100% {
-          transform: translateX(-100px) translateY(100px);
-          opacity: 0;
-        }
+    }
+
+    /* Phone Mockup Animation */
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
       }
-      /* Phone Mockup Animation */
-      @keyframes float {
-        0% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-15px);
-        }
-        100% {
-          transform: translateY(0px);
-        }
+
+      50% {
+        transform: translateY(-15px);
       }
-      .mockup-float {
-        animation: float 6s ease-in-out infinite;
+
+      100% {
+        transform: translateY(0px);
       }
-    </style>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              background: "#0a0a0f",
-              primary: "#7e22ce",
-              secondary: "#4f46e5",
-            },
+    }
+
+    .mockup-float {
+      animation: float 6s ease-in-out infinite;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: "#0a0a0f",
+            primary: "#7e22ce",
+            secondary: "#4f46e5",
           },
         },
-      };
-    </script>
-  </head>
-  <body
-    class="bg-background text-white overflow-x-hidden selection:bg-primary/30"
-  >
-    <!-- Navbar -->
-    <nav
-      class="fixed top-0 w-full z-50 border-b border-white/5 bg-background/80 backdrop-blur-md"
-    >
-      <div
-        class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between"
-      >
-        <div class="flex items-center gap-2">
+      },
+    };
+  </script>
+</head>
+
+<body class="bg-background text-white overflow-x-hidden selection:bg-primary/30">
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-background/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div
+          class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center">
+          <i class="ph-fill ph-sparkle text-white"></i>
+        </div>
+        <span class="font-bold text-lg tracking-tight">Onepick Tarot</span>
+      </div>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+        <a href="#features" class="hover:text-white transition-colors">주요 기능</a>
+        <a href="#how-it-works" class="hover:text-white transition-colors">이용 방법</a>
+        <a href="#download" class="hover:text-white transition-colors">다운로드</a>
+      </div>
+      <a href="#download"
+        class="hidden md:flex items-center gap-2 bg-white text-black px-4 py-2 rounded-full text-sm font-bold hover:bg-gray-200 transition-colors">
+        앱 설치하기 <i class="ph-bold ph-download-simple"></i>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+    <!-- Background Effects -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
+      <div class="absolute top-20 left-10 w-72 h-72 bg-purple-600/20 rounded-full blur-[100px]"></div>
+      <div class="absolute bottom-20 right-10 w-96 h-96 bg-indigo-600/20 rounded-full blur-[100px]"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+        <!-- Text Content -->
+        <div class="flex-1 text-center lg:text-left">
           <div
-            class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center"
-          >
-            <i class="ph-fill ph-sparkle text-white"></i>
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-purple-300 text-xs font-medium mb-6 animate-pulse">
+            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+            원픽타로 출시
           </div>
-          <span class="font-bold text-lg tracking-tight">Onepick Tarot</span>
-        </div>
-        <div
-          class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400"
-        >
-          <a href="#features" class="hover:text-white transition-colors"
-            >주요 기능</a
-          >
-          <a href="#how-it-works" class="hover:text-white transition-colors"
-            >이용 방법</a
-          >
-          <a href="#download" class="hover:text-white transition-colors"
-            >다운로드</a
-          >
-        </div>
-        <a
-          href="#download"
-          class="hidden md:flex items-center gap-2 bg-white text-black px-4 py-2 rounded-full text-sm font-bold hover:bg-gray-200 transition-colors"
-        >
-          앱 설치하기 <i class="ph-bold ph-download-simple"></i>
-        </a>
-      </div>
-    </nav>
+          <h1 class="text-4xl lg:text-6xl font-bold leading-tight mb-6">
+            불안한 미래,<br />
+            <span class="gradient-text">AI 타로마스터</span>에게<br />
+            물어보세요.
+          </h1>
+          <p class="text-gray-400 text-lg mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            연애운, 재회운, 그리고 오늘의 운세까지.<br class="hidden md:block" />
+            당신의 고민을 듣고 타로마스터가 가장 적절한 카드를 뽑아 명쾌하게
+            해석해드립니다.
+          </p>
 
-    <!-- Hero Section -->
-    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-      <!-- Background Effects -->
-      <div
-        class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none"
-      >
-        <div
-          class="absolute top-20 left-10 w-72 h-72 bg-purple-600/20 rounded-full blur-[100px]"
-        ></div>
-        <div
-          class="absolute bottom-20 right-10 w-96 h-96 bg-indigo-600/20 rounded-full blur-[100px]"
-        ></div>
-      </div>
-
-      <div class="max-w-7xl mx-auto px-6 relative z-10">
-        <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-          <!-- Text Content -->
-          <div class="flex-1 text-center lg:text-left">
-            <div
-              class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-purple-300 text-xs font-medium mb-6 animate-pulse"
-            >
-              <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
-              원픽타로 출시
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <a href="https://play.google.com/apps/testing/com.onepick.tarot" target="_blank"
+              class="block w-full sm:w-auto transform transition hover:-translate-y-1">
+              <div
+                class="bg-white text-black h-14 px-6 rounded-xl flex items-center justify-center gap-3 font-bold shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                <i class="ph-fill ph-google-play-logo text-2xl"></i>
+                <div class="text-left leading-none">
+                  <div class="text-[10px] font-medium opacity-80">
+                    GET IT ON
+                  </div>
+                  <div class="text-base">Google Play</div>
+                </div>
+              </div>
+            </a>
+            <div class="text-gray-500 text-sm font-medium">
+              * iOS 버전은 준비 중입니다.
             </div>
-            <h1 class="text-4xl lg:text-6xl font-bold leading-tight mb-6">
-              불안한 미래,<br />
-              <span class="gradient-text">AI 타로마스터</span>에게<br />
-              물어보세요.
-            </h1>
-            <p
-              class="text-gray-400 text-lg mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0"
-            >
-              연애운, 재회운, 그리고 오늘의 운세까지.<br
-                class="hidden md:block"
-              />
-              당신의 고민을 듣고 타로마스터가 가장 적절한 카드를 뽑아 명쾌하게
-              해석해드립니다.
-            </p>
+          </div>
 
-            <div
-              class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
-            >
-              <a
-                href="https://play.google.com/apps/testing/com.onepick.tarot" target="_blank" 
-                class="block w-full sm:w-auto transform transition hover:-translate-y-1"
-              >
+          <div class="mt-8 flex items-center justify-center lg:justify-start gap-4 text-sm text-gray-500">
+            <div class="flex items-center gap-1">
+              <i class="ph-fill ph-check-circle text-purple-500"></i> 익명
+              보장
+            </div>
+            <div class="flex items-center gap-1">
+              <i class="ph-fill ph-check-circle text-purple-500"></i> 무료
+              상담
+            </div>
+            <div class="flex items-center gap-1">
+              <i class="ph-fill ph-check-circle text-purple-500"></i> AI 심층
+              해석
+            </div>
+          </div>
+        </div>
+
+        <!-- Phone Mockup -->
+        <div class="relative w-full max-w-[300px] lg:max-w-md mx-auto perspective-1000 mockup-float">
+          <!-- Glow behind phone -->
+          <div
+            class="absolute inset-0 bg-gradient-to-tr from-purple-600 to-pink-600 blur-[60px] opacity-40 rounded-full scale-90">
+          </div>
+
+          <!-- Phone Frame -->
+          <div class="relative bg-gray-900 rounded-[2.5rem] p-3 border-4 border-gray-800 shadow-2xl">
+            <!-- Notch -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-800 rounded-b-xl z-20"></div>
+
+            <!-- Screen Content Mockup -->
+            <div class="bg-[#1a1a2e] w-full aspect-[9/19] rounded-[2rem] overflow-hidden relative">
+              <!-- Header -->
+              <div class="h-16 flex items-center justify-between px-6 pt-6">
+                <i class="ph-bold ph-list text-white/50"></i>
+                <span class="text-white font-bold">결과 보기</span>
+                <i class="ph-bold ph-share-network text-white/50"></i>
+              </div>
+
+              <!-- Card Image -->
+              <div class="mt-4 px-8">
                 <div
-                  class="bg-white text-black h-14 px-6 rounded-xl flex items-center justify-center gap-3 font-bold shadow-[0_0_20px_rgba(255,255,255,0.2)]"
-                >
-                  <i class="ph-fill ph-google-play-logo text-2xl"></i>
-                  <div class="text-left leading-none">
-                    <div class="text-[10px] font-medium opacity-80">
-                      GET IT ON
-                    </div>
-                    <div class="text-base">Google Play</div>
-                  </div>
+                  class="w-full aspect-[2/3] bg-gradient-to-br from-yellow-800/20 to-yellow-600/10 rounded-lg border border-yellow-500/30 flex items-center justify-center relative overflow-hidden group">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" alt="The Fool"
+                    class="w-full h-full object-cover opacity-80 mix-blend-overlay" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                  <span class="absolute bottom-4 text-yellow-100 font-serif text-xl font-bold">The Fool</span>
                 </div>
-              </a>
-              <div class="text-gray-500 text-sm font-medium">
-                * iOS 버전은 준비 중입니다.
               </div>
-            </div>
 
-            <div
-              class="mt-8 flex items-center justify-center lg:justify-start gap-4 text-sm text-gray-500"
-            >
-              <div class="flex items-center gap-1">
-                <i class="ph-fill ph-check-circle text-purple-500"></i> 익명
-                보장
-              </div>
-              <div class="flex items-center gap-1">
-                <i class="ph-fill ph-check-circle text-purple-500"></i> 무료
-                상담
-              </div>
-              <div class="flex items-center gap-1">
-                <i class="ph-fill ph-check-circle text-purple-500"></i> AI 심층
-                해석
-              </div>
-            </div>
-          </div>
-
-          <!-- Phone Mockup -->
-          <div
-            class="relative w-full max-w-[300px] lg:max-w-md mx-auto perspective-1000 mockup-float"
-          >
-            <!-- Glow behind phone -->
-            <div
-              class="absolute inset-0 bg-gradient-to-tr from-purple-600 to-pink-600 blur-[60px] opacity-40 rounded-full scale-90"
-            ></div>
-
-            <!-- Phone Frame -->
-            <div
-              class="relative bg-gray-900 rounded-[2.5rem] p-3 border-4 border-gray-800 shadow-2xl"
-            >
-              <!-- Notch -->
-              <div
-                class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-800 rounded-b-xl z-20"
-              ></div>
-
-              <!-- Screen Content Mockup -->
-              <div
-                class="bg-[#1a1a2e] w-full aspect-[9/19] rounded-[2rem] overflow-hidden relative"
-              >
-                <!-- Header -->
-                <div class="h-16 flex items-center justify-between px-6 pt-6">
-                  <i class="ph-bold ph-list text-white/50"></i>
-                  <span class="text-white font-bold">결과 보기</span>
-                  <i class="ph-bold ph-share-network text-white/50"></i>
+              <!-- Interpretation Text -->
+              <div class="p-6">
+                <div class="flex items-center gap-2 mb-3">
+                  <div class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
+                  <span class="text-purple-300 text-xs font-bold">타로마스터</span>
                 </div>
-
-                <!-- Card Image -->
-                <div class="mt-4 px-8">
-                  <div
-                    class="w-full aspect-[2/3] bg-gradient-to-br from-yellow-800/20 to-yellow-600/10 rounded-lg border border-yellow-500/30 flex items-center justify-center relative overflow-hidden group"
-                  >
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg"
-                      alt="The Fool"
-                      class="w-full h-full object-cover opacity-80 mix-blend-overlay"
-                    />
-                    <div
-                      class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"
-                    ></div>
-                    <span
-                      class="absolute bottom-4 text-yellow-100 font-serif text-xl font-bold"
-                      >The Fool</span
-                    >
-                  </div>
+                <h3 class="text-white font-bold text-lg mb-2">
+                  새로운 시작이 기다리고 있습니다
+                </h3>
+                <div class="space-y-2">
+                  <div class="h-2 w-full bg-white/10 rounded"></div>
+                  <div class="h-2 w-5/6 bg-white/10 rounded"></div>
+                  <div class="h-2 w-4/6 bg-white/10 rounded"></div>
                 </div>
-
-                <!-- Interpretation Text -->
-                <div class="p-6">
-                  <div class="flex items-center gap-2 mb-3">
-                    <div
-                      class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"
-                    ></div>
-                    <span class="text-purple-300 text-xs font-bold"
-                      >타로마스터</span
-                    >
-                  </div>
-                  <h3 class="text-white font-bold text-lg mb-2">
-                    새로운 시작이 기다리고 있습니다
-                  </h3>
-                  <div class="space-y-2">
-                    <div class="h-2 w-full bg-white/10 rounded"></div>
-                    <div class="h-2 w-5/6 bg-white/10 rounded"></div>
-                    <div class="h-2 w-4/6 bg-white/10 rounded"></div>
-                  </div>
-                  <button
-                    class="w-full mt-6 py-3 bg-white/10 rounded-lg text-white/80 text-sm font-bold border border-white/5"
-                  >
-                    자세히 읽기
-                  </button>
-                </div>
+                <button
+                  class="w-full mt-6 py-3 bg-white/10 rounded-lg text-white/80 text-sm font-bold border border-white/5">
+                  자세히 읽기
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <!-- Features Grid -->
-    <section id="features" class="py-20 bg-white/5 relative">
-      <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl font-bold mb-4">
-            왜 <span class="text-purple-400">원픽타로</span>인가요?
-          </h2>
-          <p class="text-gray-400">
-            기존 타로 앱과는 차원이 다른 경험을 제공합니다.
+  <!-- Features Grid -->
+  <section id="features" class="py-20 bg-white/5 relative">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold mb-4">
+          왜 <span class="text-purple-400">원픽타로</span>인가요?
+        </h2>
+        <p class="text-gray-400">
+          기존 타로 앱과는 차원이 다른 경험을 제공합니다.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Feature 1 -->
+        <div class="glass glass-card p-8 rounded-2xl transition-all duration-300">
+          <div
+            class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center mb-6 text-2xl">
+            <i class="ph-fill ph-brain"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Hyper-Real AI</h3>
+          <p class="text-gray-400 leading-relaxed text-sm">
+            단순한 키워드 조합이 아닙니다. 최신 LLM 모델이 당신의 상황과
+            질문을 깊이 있게 이해하고, 실제 타로 마스터처럼 스토리텔링합니다.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <!-- Feature 1 -->
+        <!-- Feature 2 -->
+        <div class="glass glass-card p-8 rounded-2xl transition-all duration-300">
           <div
-            class="glass glass-card p-8 rounded-2xl transition-all duration-300"
-          >
+            class="w-12 h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-6 text-2xl">
+            <i class="ph-fill ph-mask-happy"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">완벽한 익명성</h3>
+          <p class="text-gray-400 leading-relaxed text-sm">
+            회원가입? 필요 없습니다. 앱 설치 즉시 익명으로 상담을 시작하세요.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glass glass-card p-8 rounded-2xl transition-all duration-300">
+          <div class="w-12 h-12 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center mb-6 text-2xl">
+            <i class="ph-fill ph-heart"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">소울메이트 찾기</h3>
+          <p class="text-gray-400 leading-relaxed text-sm">
+            썸 타는 그 사람과의 속마음이 궁금한가요? 커플 궁합, 재회운 등
+            연애에 특화된 스프레드를 제공합니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it Works Section -->
+  <section id="how-it-works" class="py-20 relative">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold mb-4">어떻게 <span class="text-indigo-400">사용하나요?</span></h2>
+        <p class="text-gray-400">단 3번의 터치로 당신의 운명을 확인하세요.</p>
+      </div>
+
+      <div class="relative">
+        <!-- Connecting Line (Desktop) -->
+        <div
+          class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent -translate-y-1/2">
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+          <!-- Step 1 -->
+          <div class="text-center group">
             <div
-              class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center mb-6 text-2xl"
-            >
-              <i class="ph-fill ph-brain"></i>
+              class="w-16 h-16 mx-auto bg-[#1a1a2e] border border-white/10 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-purple-900/20 group-hover:scale-110 transition-transform duration-300 relative">
+              <div
+                class="absolute inset-0 bg-purple-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+              </div>
+              <span class="text-2xl font-bold text-white relative z-10">1</span>
             </div>
-            <h3 class="text-xl font-bold mb-3">Hyper-Real AI</h3>
-            <p class="text-gray-400 leading-relaxed text-sm">
-              단순한 키워드 조합이 아닙니다. 최신 LLM 모델이 당신의 상황과
-              질문을 깊이 있게 이해하고, 실제 타로 마스터처럼 스토리텔링합니다.
-            </p>
+            <h3 class="text-lg font-bold mb-2">고민 선택</h3>
+            <p class="text-gray-400 text-sm">연애, 금전, 진로 등<br>궁금한 주제를 고르세요.</p>
           </div>
 
-          <!-- Feature 2 -->
-          <div
-            class="glass glass-card p-8 rounded-2xl transition-all duration-300"
-          >
+          <!-- Step 2 -->
+          <div class="text-center group">
             <div
-              class="w-12 h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-6 text-2xl"
-            >
-              <i class="ph-fill ph-mask-happy"></i>
+              class="w-16 h-16 mx-auto bg-[#1a1a2e] border border-white/10 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-indigo-900/20 group-hover:scale-110 transition-transform duration-300 relative">
+              <div
+                class="absolute inset-0 bg-indigo-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+              </div>
+              <span class="text-2xl font-bold text-white relative z-10">2</span>
             </div>
-            <h3 class="text-xl font-bold mb-3">완벽한 익명성</h3>
-            <p class="text-gray-400 leading-relaxed text-sm">
-              회원가입? 필요 없습니다. 앱 설치 즉시 익명으로 상담을 시작하세요.
-            </p>
+            <h3 class="text-lg font-bold mb-2">카드 선택</h3>
+            <p class="text-gray-400 text-sm">마음을 집중하고<br>타로 카드를 뽑아주세요.</p>
           </div>
 
-          <!-- Feature 3 -->
-          <div
-            class="glass glass-card p-8 rounded-2xl transition-all duration-300"
-          >
+          <!-- Step 3 -->
+          <div class="text-center group">
             <div
-              class="w-12 h-12 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center mb-6 text-2xl"
-            >
-              <i class="ph-fill ph-heart"></i>
+              class="w-16 h-16 mx-auto bg-[#1a1a2e] border border-white/10 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-pink-900/20 group-hover:scale-110 transition-transform duration-300 relative">
+              <div
+                class="absolute inset-0 bg-pink-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+              </div>
+              <i class="ph-fill ph-sparkle text-2xl text-white relative z-10"></i>
             </div>
-            <h3 class="text-xl font-bold mb-3">소울메이트 찾기</h3>
-            <p class="text-gray-400 leading-relaxed text-sm">
-              썸 타는 그 사람과의 속마음이 궁금한가요? 커플 궁합, 재회운 등
-              연애에 특화된 스프레드를 제공합니다.
-            </p>
+            <h3 class="text-lg font-bold mb-2">AI 분석</h3>
+            <p class="text-gray-400 text-sm">Gemini Pro가 상황을<br>다각도로 분석합니다.</p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="text-center group">
+            <div
+              class="w-16 h-16 mx-auto bg-[#1a1a2e] border border-white/10 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-purple-900/20 group-hover:scale-110 transition-transform duration-300 relative">
+              <div
+                class="absolute inset-0 bg-purple-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+              </div>
+              <i class="ph-fill ph-envelope-open text-2xl text-white relative z-10"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-2">결과 확인</h3>
+            <p class="text-gray-400 text-sm">현실적인 조언과<br>해결책을 받아보세요.</p>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- How it Works Section -->
-    <section id="how-it-works" class="py-20 relative">
-      <div class="max-w-7xl mx-auto px-6">
-        <div class="text-center mb-16">
-          <h2 class="text-3xl font-bold mb-4">어떻게 <span class="text-indigo-400">사용하나요?</span></h2>
-          <p class="text-gray-400">단 3번의 터치로 당신의 운명을 확인하세요.</p>
-        </div>
-
-        <div class="relative">
-          <!-- Connecting Line (Desktop) -->
-          <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent -translate-y-1/2"></div>
-
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
-            <!-- Step 1 -->
-            <div class="text-center group">
-              <div class="w-16 h-16 mx-auto bg-[#1a1a2e] border border-white/10 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-purple-900/20 group-hover:scale-110 transition-transform duration-300 relative">
-                <div class="absolute inset-0 bg-purple-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <span class="text-2xl font-bold text-white relative z-10">1</span>
-              </div>
-              <h3 class="text-lg font-bold mb-2">고민 선택</h3>
-              <p class="text-gray-400 text-sm">연애, 금전, 진로 등<br>궁금한 주제를 고르세요.</p>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="text-center group">
-              <div class="w-16 h-16 mx-auto bg-[#1a1a2e] border border-white/10 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-indigo-900/20 group-hover:scale-110 transition-transform duration-300 relative">
-                <div class="absolute inset-0 bg-indigo-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <span class="text-2xl font-bold text-white relative z-10">2</span>
-              </div>
-              <h3 class="text-lg font-bold mb-2">카드 선택</h3>
-              <p class="text-gray-400 text-sm">마음을 집중하고<br>타로 카드를 뽑아주세요.</p>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="text-center group">
-              <div class="w-16 h-16 mx-auto bg-[#1a1a2e] border border-white/10 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-pink-900/20 group-hover:scale-110 transition-transform duration-300 relative">
-                <div class="absolute inset-0 bg-pink-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <i class="ph-fill ph-sparkle text-2xl text-white relative z-10"></i>
-              </div>
-              <h3 class="text-lg font-bold mb-2">AI 분석</h3>
-              <p class="text-gray-400 text-sm">Gemini Pro가 상황을<br>다각도로 분석합니다.</p>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="text-center group">
-              <div class="w-16 h-16 mx-auto bg-[#1a1a2e] border border-white/10 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-purple-900/20 group-hover:scale-110 transition-transform duration-300 relative">
-                <div class="absolute inset-0 bg-purple-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <i class="ph-fill ph-envelope-open text-2xl text-white relative z-10"></i>
-              </div>
-              <h3 class="text-lg font-bold mb-2">결과 확인</h3>
-              <p class="text-gray-400 text-sm">현실적인 조언과<br>해결책을 받아보세요.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
 
     <!-- Stats / Trust -->
     <section class="py-20 border-t border-white/5">
@@ -446,9 +392,7 @@
 
     <!-- CTA Section -->
     <section id="download" class="py-20 relative overflow-hidden">
-      <div
-        class="absolute inset-0 bg-gradient-to-b from-purple-900/20 to-background pointer-events-none"
-      ></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-purple-900/20 to-background pointer-events-none"></div>
       <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
         <h2 class="text-3xl lg:text-5xl font-bold mb-8">
           당신의 운명을<br />
@@ -459,13 +403,10 @@
           원픽타로가 그 목소리를 들려드립니다.
         </p>
         <div class="flex items-center justify-center gap-4">
-          <a
-            href="https://play.google.com/apps/testing/com.onepick.tarot" target="_blank"
-            class="transform transition hover:scale-105 active:scale-95"
-          >
+          <a href="https://play.google.com/apps/testing/com.onepick.tarot" target="_blank"
+            class="transform transition hover:scale-105 active:scale-95">
             <div
-              class="bg-white text-black h-16 px-8 rounded-2xl flex items-center justify-center gap-4 font-bold shadow-2xl shadow-purple-900/50"
-            >
+              class="bg-white text-black h-16 px-8 rounded-2xl flex items-center justify-center gap-4 font-bold shadow-2xl shadow-purple-900/50">
               <i class="ph-fill ph-google-play-logo text-3xl"></i>
               <div class="text-left leading-none">
                 <div class="text-xs font-semibold opacity-70 mb-1">
@@ -486,13 +427,10 @@
           <div class="col-span-1 md:col-span-2">
             <div class="flex items-center gap-2 mb-6">
               <div
-                class="w-6 h-6 rounded bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center"
-              >
+                class="w-6 h-6 rounded bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center">
                 <i class="ph-fill ph-sparkle text-white text-xs"></i>
               </div>
-              <span class="font-bold text-lg tracking-tight"
-                >Onepick Tarot</span
-              >
+              <span class="font-bold text-lg tracking-tight">Onepick Tarot</span>
             </div>
             <p class="text-gray-500 text-sm leading-relaxed max-w-sm">
               원픽타로는 AI 기술을 활용하여 사용자에게 개인화된 타로 상담 경험을
@@ -505,18 +443,12 @@
             <h4 class="font-bold text-white mb-6">Legal</h4>
             <ul class="space-y-4 text-sm text-gray-400">
               <li>
-                <a
-                  href="https://onepick-soft.github.io/onepick-tarot/TERMS_OF_SERVICE" target="_blank"
-                  class="hover:text-purple-400 transition-colors"
-                  >서비스 이용약관</a
-                >
+                <a href="https://onepick-soft.github.io/onepick-tarot/TERMS_OF_SERVICE" target="_blank"
+                  class="hover:text-purple-400 transition-colors">서비스 이용약관</a>
               </li>
               <li>
-                <a
-                  href="https://onepick-soft.github.io/onepick-tarot/PRIVACY_POLICY" target="_blank"
-                  class="hover:text-purple-400 transition-colors"
-                  >개인정보처리방침</a
-                >
+                <a href="https://onepick-soft.github.io/onepick-tarot/PRIVACY_POLICY" target="_blank"
+                  class="hover:text-purple-400 transition-colors">개인정보처리방침</a>
               </li>
             </ul>
           </div>
@@ -525,11 +457,8 @@
             <h4 class="font-bold text-white mb-6">Contact</h4>
             <ul class="space-y-4 text-sm text-gray-400">
               <li>
-                <a
-                  href="mailto:butswave21@gmail.com"
-                  class="hover:text-purple-400 transition-colors"
-                  >butswave21@gmail.com</a
-                >
+                <a href="mailto:butswave21@gmail.com"
+                  class="hover:text-purple-400 transition-colors">butswave21@gmail.com</a>
               </li>
               <li class="text-gray-600 text-xs mt-4">
                 인천광역시 부평구<br />
@@ -539,14 +468,206 @@
           </div>
         </div>
 
-        <div
-          class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
-        >
-          <p class="text-gray-600 text-xs">
-            &copy; 2026 Onepick Soft. All rights reserved.
-          </p>
-        </div>
-      </div>
-    </footer>
-  </body>
+        <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <!-- Admin Entry Button (Hidden by default) -->
+          <button id="admin-entry-btn" onclick="toggleAdminPanel()" style="display: none;"
+            class="fixed bottom-4 right-4 z-50 bg-gray-800 text-white p-2 rounded-full border border-gray-700 opacity-50 hover:opacity-100">
+            <i class="ph-fill ph-gear"></i>
+          </button>
+
+          <!-- Admin Settings Panel -->
+          <div id="admin-panel" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-md overflow-y-auto">
+            <div class="max-w-2xl mx-auto my-10 bg-[#1a1a2e] border border-white/10 rounded-2xl p-6 relative">
+              <button onclick="toggleAdminPanel()" class="absolute top-4 right-4 text-white/50 hover:text-white">
+                <i class="ph-bold ph-x text-2xl"></i>
+              </button>
+
+              <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <i class="ph-fill ph-lock-key text-purple-500"></i> 앱 제어 센터
+              </h2>
+
+              <!-- Login Section -->
+              <div id="admin-login-section" class="text-center py-10">
+                <p class="text-gray-400 mb-6">관리자 계정으로 로그인해주세요.</p>
+                <button onclick="handleAdminLogin()"
+                  class="px-6 py-3 bg-white text-black font-bold rounded-xl hover:bg-gray-200">
+                  Google 로그인
+                </button>
+              </div>
+
+              <!-- Configuration Section -->
+              <div id="admin-config-section" class="hidden space-y-8">
+
+                <!-- 1. 점검 모드 -->
+                <div class="p-5 bg-amber-900/20 border border-amber-500/30 rounded-xl">
+                  <h3 class="text-xl font-bold text-amber-400 mb-4 flex items-center gap-2">
+                    <i class="ph-fill ph-warning"></i> 긴급 점검
+                  </h3>
+                  <div class="space-y-4">
+                    <div class="flex items-center justify-between bg-black/30 p-3 rounded-lg">
+                      <span class="font-bold">점검 모드 활성화</span>
+                      <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="maint-enabled" class="sr-only peer">
+                        <div
+                          class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500">
+                        </div>
+                      </label>
+                    </div>
+                    <input type="text" id="maint-title" placeholder="제목"
+                      class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white focus:border-amber-500 outline-none">
+                    <textarea id="maint-message" placeholder="메시지"
+                      class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white focus:border-amber-500 outline-none h-20"></textarea>
+                  </div>
+                </div>
+
+                <!-- 2. 안드로이드 버전 관리 -->
+                <div class="p-5 bg-white/5 border border-white/10 rounded-xl">
+                  <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center gap-2">
+                    <i class="ph-fill ph-android-logo"></i> Android 설정
+                  </h3>
+                  <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label class="text-xs text-gray-400 block mb-1">최소 버전 (강제)</label>
+                      <input type="text" id="android-min"
+                        class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white">
+                    </div>
+                    <div>
+                      <label class="text-xs text-gray-400 block mb-1">최신 버전 (권장)</label>
+                      <input type="text" id="android-latest"
+                        class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white">
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <label class="flex items-center gap-2 text-sm text-gray-400 cursor-pointer">
+                      <input type="checkbox" id="android-rec" class="accent-green-500 w-4 h-4">
+                      권장 업데이트 팝업 표시
+                    </label>
+                  </div>
+                  <div class="mb-4">
+                    <label class="text-xs text-gray-400 block mb-1">스토어 링크</label>
+                    <input type="text" id="android-url"
+                      class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-blue-400">
+                  </div>
+                  <div>
+                    <label class="text-xs text-gray-400 block mb-1">업데이트 메시지</label>
+                    <textarea id="android-msg"
+                      class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white h-20"></textarea>
+                  </div>
+                </div>
+
+                <button id="save-btn" onclick="saveConfig()"
+                  class="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl font-bold text-lg hover:brightness-110 transition-all shadow-lg">
+                  설정 저장하기
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Firebase SDK (Compat) -->
+          <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+          <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+          <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+          <script>
+            const firebaseConfig = {
+              apiKey: "AIzaSyBA2lvCeFzlGZpFMIsEvL5Pi0EBSvkn8ME",
+              authDomain: "onepick-tarot.firebaseapp.com",
+              projectId: "onepick-tarot",
+              storageBucket: "onepick-tarot.firebasestorage.app",
+              messagingSenderId: "328293650868",
+              appId: "1:328293650868:web:d0d38b3d5c47d91b3022e1",
+              measurementId: "G-PBG32LMVD8"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+            const auth = firebase.auth();
+            const db = firebase.firestore();
+
+            // Admin Utils
+            async function handleAdminLogin() {
+              const provider = new firebase.auth.GoogleAuthProvider();
+              try {
+                await auth.signInWithPopup(provider);
+              } catch (error) {
+                alert("로그인 실패: " + error.message);
+              }
+            }
+
+            function toggleAdminPanel() {
+              const panel = document.getElementById("admin-panel");
+              panel.classList.toggle("hidden");
+            }
+
+            function loadConfig() {
+              db.collection("system").doc("config").onSnapshot((doc) => {
+                if (doc.exists) {
+                  const data = doc.data();
+                  renderConfig(data);
+                }
+              });
+            }
+
+            function renderConfig(data) {
+              // Maintenance
+              document.getElementById("maint-enabled").checked = data.maintenance?.enabled || false;
+              document.getElementById("maint-title").value = data.maintenance?.title || "";
+              document.getElementById("maint-message").value = data.maintenance?.message || "";
+
+              // Android
+              document.getElementById("android-min").value = data.android?.minVersion || "";
+              document.getElementById("android-latest").value = data.android?.latestVersion || "";
+              document.getElementById("android-url").value = data.android?.storeUrl || "";
+              document.getElementById("android-msg").value = data.android?.message || "";
+              document.getElementById("android-rec").checked = data.android?.showRecommended || false;
+            }
+
+            async function saveConfig() {
+              const newConfig = {
+                maintenance: {
+                  enabled: document.getElementById("maint-enabled").checked,
+                  title: document.getElementById("maint-title").value,
+                  message: document.getElementById("maint-message").value
+                },
+                android: {
+                  minVersion: document.getElementById("android-min").value,
+                  latestVersion: document.getElementById("android-latest").value,
+                  storeUrl: document.getElementById("android-url").value,
+                  message: document.getElementById("android-msg").value,
+                  showRecommended: document.getElementById("android-rec").checked
+                },
+                ios: { minVersion: "1.0.0", latestVersion: "1.0.0" } // Default placeholder
+              };
+
+              try {
+                const btn = document.getElementById("save-btn");
+                const originalText = btn.innerText;
+                btn.innerText = "저장 중...";
+                await db.collection("system").doc("config").set(newConfig, { merge: true });
+                btn.innerText = "저장 완료!";
+                setTimeout(() => btn.innerText = originalText, 2000);
+              } catch (e) {
+                alert("저장 실패: " + e.message);
+              }
+            }
+
+            // Auth State Listener
+            auth.onAuthStateChanged((user) => {
+              const adminBtn = document.getElementById("admin-entry-btn");
+              const adminPanel = document.getElementById("admin-panel");
+              const loginSection = document.getElementById("admin-login-section");
+              const configSection = document.getElementById("admin-config-section");
+
+              if (user && user.email === "ljb2727@gmail.com") {
+                adminBtn.style.display = "block"; // Show entry button
+                loginSection.classList.add("hidden");
+                configSection.classList.remove("hidden");
+                loadConfig();
+              } else {
+                // Not admin
+                loginSection.classList.remove("hidden");
+                configSection.classList.add("hidden");
+              }
+            });
+          </script>
+</body>
+
 </html>
