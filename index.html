@@ -502,7 +502,7 @@
               <!-- Configuration Section -->
               <div id="admin-config-section" class="hidden space-y-8">
 
-                <!-- 1. 점검 모드 -->
+                <!-- 1. 서버 점검 모드 -->
                 <div class="p-5 bg-amber-900/20 border border-amber-500/30 rounded-xl">
                   <h3 class="text-xl font-bold text-amber-400 mb-4 flex items-center gap-2">
                     <i class="ph-fill ph-warning"></i> 긴급 점검
@@ -511,7 +511,8 @@
                     <div class="flex items-center justify-between bg-black/30 p-3 rounded-lg">
                       <span class="font-bold">점검 모드 활성화</span>
                       <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" id="maint-enabled" class="sr-only peer">
+                        <input type="checkbox" id="maint-enabled" class="sr-only peer"
+                          onchange="if(this.checked) document.getElementById('android-force').checked = false;">
                         <div
                           class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500">
                         </div>
@@ -531,26 +532,29 @@
                       <span class="flex items-center gap-2">
                         <i class="ph-fill ph-android-logo"></i> Android 업데이트 설정
                       </span>
-                      <span id="current-build-version"
-                        class="text-xs font-normal text-gray-500 bg-gray-800 px-2 py-1 rounded border border-gray-700">최신
-                        빌드 확인 중...</span>
                     </div>
                   </h3>
 
                   <div class="mb-6 p-4 bg-green-900/10 border border-green-500/20 rounded-lg">
-                    <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center justify-between mb-4">
                       <span class="font-bold text-white">강제 업데이트 모드</span>
                       <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" id="android-force" class="sr-only peer">
+                        <input type="checkbox" id="android-force" class="sr-only peer"
+                          onchange="if(this.checked) document.getElementById('maint-enabled').checked = false;">
                         <div
                           class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500">
                         </div>
                       </label>
                     </div>
-                    <p class="text-xs text-gray-400">
-                      * 켜기: 스토어에 새 버전이 있으면 <strong>업데이트 할 때까지 앱 사용이 불가능</strong>합니다.<br>
-                      * 끄기: 업데이트 알림창이 뜨지만 <strong>'다음에 하기'</strong>로 닫을 수 있습니다.
-                    </p>
+
+                    <div class="mb-2">
+                      <label class="text-xs text-green-300 font-bold block mb-1">현재 스토어 최신 버전</label>
+                      <input type="text" id="android-latest-version" placeholder="예: 1.1.58"
+                        class="w-full bg-black/30 border border-green-500/30 rounded p-2 text-lg text-white font-bold tracking-widest text-center focus:border-green-500 outline-none">
+                      <p class="text-xs text-gray-400 mt-1 text-center">
+                        이 버전보다 <strong>낮은 버전 사용자</strong>에게 업데이트 팝업이 뜹니다.
+                      </p>
+                    </div>
                   </div>
 
                   <div class="mb-4">
@@ -567,17 +571,20 @@
                   </div>
                 </div>
 
-                <!-- 3. 도움말 (간소화) -->
+                <!-- 3. 도움말 -->
                 <div class="p-5 bg-blue-900/10 border border-blue-500/20 rounded-xl">
                   <h3 class="text-base font-bold text-blue-400 mb-2 flex items-center gap-2">
                     <i class="ph-fill ph-info"></i> 도움말
                   </h3>
-                  <p class="text-sm text-gray-400 leading-relaxed">
-                    이제 별도의 버전 입력이 필요 없습니다. 앱이 실행될 때 자동으로 <strong>구글 플레이 스토어</strong>를 확인하여, 설치된 버전보다 스토어 버전이 높으면 업데이트
-                    알림을 띄웁니다.
-                    <br><br>
-                    위의 <strong>'강제 업데이트 모드'</strong> 스위치로 알림창을 강제로 고정할지, 닫기를 허용할지만 결정하시면 됩니다.
-                  </p>
+                  <div class="space-y-2 text-sm text-gray-400 leading-relaxed">
+                    <p>1. <strong>최신 버전</strong> 칸에 현재 구글 플레이 스토어에 출시된 버전을 입력하세요.</p>
+                    <p>2. 입력한 버전보다 낮은 사용자가 앱을 켜면 알림이 뜹니다.</p>
+                    <p>3. <strong>강제 업데이트 모드</strong>:</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                      <li><span class="text-green-400">ON</span>: 닫기 버튼이 없어 무조건 업데이트 해야 합니다.</li>
+                      <li><span class="text-gray-400">OFF</span>: '다음에 하기'로 닫고 앱을 쓸 수 있습니다.</li>
+                    </ul>
+                  </div>
                 </div>
 
                 <button id="save-btn" onclick="saveConfig()"
@@ -639,31 +646,6 @@
                   renderConfig(data);
                 }
               });
-
-              // Fetch Latest Build Version from GitHub
-              fetchLatestBuildVersion();
-            }
-
-            async function fetchLatestBuildVersion() {
-              const el = document.getElementById("current-build-version");
-              try {
-                // User repo: ljb2727/tarot
-                const response = await fetch('https://raw.githubusercontent.com/ljb2727/tarot/main/android/app/build.gradle');
-                if (!response.ok) throw new Error("Failed");
-                const text = await response.text();
-
-                // Regex to find versionName "1.x.x"
-                const match = text.match(/versionName\s+"([^"]+)"/);
-                if (match && match[1]) {
-                  el.innerText = `GitHub Main: ${match[1]}`;
-                  el.classList.add("text-blue-400");
-                } else {
-                  el.innerText = "버전 파싱 실패";
-                }
-              } catch (e) {
-                console.error("GitHub Fetch Error:", e);
-                el.innerText = "GitHub 확인 불가";
-              }
             }
 
             function renderConfig(data) {
@@ -674,6 +656,7 @@
 
               // Android Update Config
               document.getElementById("android-force").checked = data.android?.forceUpdate || false;
+              document.getElementById("android-latest-version").value = data.android?.latestVersion || "";
 
               const defaultStoreUrl = "https://play.google.com/store/apps/details?id=com.onepick.tarot";
               document.getElementById("android-url").value = data.android?.storeUrl || defaultStoreUrl;
@@ -689,6 +672,7 @@
                 },
                 android: {
                   forceUpdate: document.getElementById("android-force").checked,
+                  latestVersion: document.getElementById("android-latest-version").value,
                   storeUrl: document.getElementById("android-url").value,
                   message: document.getElementById("android-msg").value
                 },
