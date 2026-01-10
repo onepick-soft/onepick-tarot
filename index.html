@@ -485,10 +485,33 @@
               <button onclick="toggleAdminPanel()" class="absolute top-4 right-4 text-white/50 hover:text-white">
                 <i class="ph-bold ph-x text-2xl"></i>
               </button>
+              <button onclick="resetApiKey()" id="apikey-reset-btn"
+                class="absolute top-4 right-14 text-white/30 hover:text-red-400 text-xs hidden underline"
+                title="API Key Reset">
+                Key Reset
+              </button>
 
               <h2 class="text-2xl font-bold mb-6 flex items-center justify-center gap-2">
                 <i class="ph-fill ph-lock-key text-purple-500"></i> 앱 제어 센터
               </h2>
+
+              <!-- API Key Section -->
+              <div id="apikey-section" class="text-center py-10 hidden">
+                <div class="mb-6">
+                  <i class="ph-duotone ph-key text-4xl text-purple-500 mb-2"></i>
+                  <h3 class="font-bold text-white">API Key 설정</h3>
+                  <p class="text-gray-400 text-sm mt-2">
+                    보안을 위해 API Key를 로컬에 저장합니다.<br />
+                    (GitHub 소스코드에 키를 포함하지 않습니다)
+                  </p>
+                </div>
+                <input type="password" id="input-apikey" placeholder="Firebase API Key 입력..."
+                  class="w-full bg-black/30 border border-white/10 rounded-xl p-4 text-white mb-4 focus:border-purple-500 outline-none text-center tracking-widest" />
+                <button onclick="saveApiKey()"
+                  class="px-8 py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-purple-900/30">
+                  저장하고 시작하기
+                </button>
+              </div>
 
               <!-- Login Section -->
               <div id="admin-login-section" class="text-center py-10">
@@ -521,10 +544,31 @@
                     </div>
                   </div>
                   <div id="maint-options" class="space-y-4 opacity-50 pointer-events-none transition-all duration-300">
-                    <input type="text" id="maint-title" placeholder="제목"
-                      class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white focus:border-amber-500 outline-none">
-                    <textarea id="maint-message" placeholder="메시지"
-                      class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white focus:border-amber-500 outline-none h-20"></textarea>
+
+                    <!-- Korean -->
+                    <div class="space-y-3 p-3 bg-black/20 rounded-lg border border-white/5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-lg">🇰🇷</span>
+                        <span class="text-xs font-bold text-amber-500/80">한국어 (기본)</span>
+                      </div>
+                      <input type="text" id="maint-title" placeholder="제목 (예: 서버 점검 중)"
+                        class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white focus:border-amber-500 outline-none">
+                      <textarea id="maint-message" placeholder="메시지 내용"
+                        class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white focus:border-amber-500 outline-none h-20"></textarea>
+                    </div>
+
+                    <!-- English -->
+                    <div class="space-y-3 p-3 bg-black/20 rounded-lg border border-white/5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-lg">🇺🇸</span>
+                        <span class="text-xs font-bold text-amber-500/80">English (선택)</span>
+                      </div>
+                      <input type="text" id="maint-title-en" placeholder="Title (e.g. System Maintenance)"
+                        class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white focus:border-amber-500 outline-none">
+                      <textarea id="maint-message-en" placeholder="Message content"
+                        class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white focus:border-amber-500 outline-none h-20"></textarea>
+                    </div>
+
                   </div>
                 </div>
 
@@ -567,18 +611,35 @@
                         class="w-full bg-black/30 border border-green-500/30 rounded p-2 text-lg text-white font-bold tracking-widest text-center focus:border-green-500 outline-none">
                     </div>
 
+                    <!-- Korean Message -->
+                    <div class="space-y-2 p-3 bg-black/20 rounded-lg border border-white/5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-lg">🇰🇷</span>
+                        <span class="text-xs font-bold text-green-500/80">안내 메시지 (한국어)</span>
+                      </div>
+                      <textarea id="android-msg"
+                        class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white h-20"
+                        placeholder="예: 최신 버전으로 업데이트 해주세요."></textarea>
+                    </div>
+
+                    <!-- English Message -->
+                    <div class="space-y-2 p-3 bg-black/20 rounded-lg border border-white/5">
+                      <div class="flex items-center gap-2">
+                        <span class="text-lg">🇺🇸</span>
+                        <span class="text-xs font-bold text-green-500/80">Message (English)</span>
+                      </div>
+                      <textarea id="android-msg-en"
+                        class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white h-20"
+                        placeholder="e.g. Please update to the latest version."></textarea>
+                    </div>
+
                     <div class="mb-4">
                       <label class="text-xs text-gray-400 block mb-1">스토어 링크</label>
                       <input type="text" id="android-url"
                         class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-blue-400"
                         value="https://play.google.com/store/apps/details?id=com.onepick.tarot">
                     </div>
-                    <div>
-                      <label class="text-xs text-gray-400 block mb-1">안내 메시지</label>
-                      <textarea id="android-msg"
-                        class="w-full bg-black/30 border border-white/10 rounded p-2 text-sm text-white h-20"
-                        placeholder="예: 새로운 기능이 추가되었습니다. 최신 버전으로 업데이트 해주세요."></textarea>
-                    </div>
+
                   </div>
                 </div>
 
@@ -595,19 +656,126 @@
           <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
           <script>
-            const firebaseConfig = {
-              apiKey: "AIzaSyAw7T1TVrDQVvwwqWkTtZYAFrRabKaY0fY", // User Provided Key
-              authDomain: "onepick-tarot.firebaseapp.com",
-              projectId: "onepick-tarot",
-              storageBucket: "onepick-tarot.firebasestorage.app",
-              messagingSenderId: "328293650868",
-              appId: "1:328293650868:web:d0d38b3d5c47d91b3022e1",
-              measurementId: "G-PBG32LMVD8"
-            };
+            // 전역 변수 선언 (let)
+            let auth;
+            let db;
+            let isFirebaseInitialized = false;
 
-            firebase.initializeApp(firebaseConfig);
-            const auth = firebase.auth();
-            const db = firebase.firestore();
+            // 1. 페이지 로드 시 (또는 패널 열 때) 초기화 시도
+            document.addEventListener("DOMContentLoaded", () => {
+              const savedKey = localStorage.getItem("onepick_firebase_key");
+
+              if (savedKey) {
+                // 키가 있으면 바로 초기화 시도
+                if (initializeFirebase(savedKey)) {
+                  showLoginSection();
+                } else {
+                  showApiKeySection();
+                }
+              } else {
+                // 키가 없으면 입력창 표시
+                showApiKeySection();
+              }
+            });
+
+            function initializeFirebase(key) {
+              if (isFirebaseInitialized) return true;
+
+              const firebaseConfig = {
+                apiKey: key,
+                authDomain: "onepick-tarot.firebaseapp.com",
+                projectId: "onepick-tarot",
+                storageBucket: "onepick-tarot.firebasestorage.app",
+                messagingSenderId: "328293650868",
+                appId: "1:328293650868:web:d0d38b3d5c47d91b3022e1",
+                measurementId: "G-PBG32LMVD8"
+              };
+
+              try {
+                if (!firebase.apps.length) {
+                  firebase.initializeApp(firebaseConfig);
+                }
+                // 성공적으로 초기화됨
+                auth = firebase.auth();
+                db = firebase.firestore();
+                isFirebaseInitialized = true;
+
+                // Auth Listener 등록 (초기화 후에 해야 함)
+                setupAuthListener();
+
+                return true;
+              } catch (e) {
+                console.error("Firebase Init Failed:", e);
+                alert("API Key가 올바르지 않거나 초기화에 실패했습니다.\n" + e.message);
+                localStorage.removeItem("onepick_firebase_key"); // 잘못된 키 삭제
+                return false;
+              }
+            }
+
+            function showApiKeySection() {
+              document.getElementById("apikey-section").classList.remove("hidden");
+              document.getElementById("admin-login-section").classList.add("hidden");
+              document.getElementById("apikey-reset-btn").classList.add("hidden");
+            }
+
+            function showLoginSection() {
+              document.getElementById("apikey-section").classList.add("hidden");
+              document.getElementById("admin-login-section").classList.remove("hidden");
+              document.getElementById("apikey-reset-btn").classList.remove("hidden");
+            }
+
+            function saveApiKey() {
+              const input = document.getElementById("input-apikey");
+              const key = input.value.trim();
+
+              if (!key) {
+                alert("API Key를 입력해주세요.");
+                return;
+              }
+
+              // 저장 및 초기화 시도
+              localStorage.setItem("onepick_firebase_key", key);
+              if (initializeFirebase(key)) {
+                alert("API Key가 저장되었습니다.");
+                showLoginSection();
+              }
+            }
+
+            function resetApiKey() {
+              if (confirm("저장된 API Key를 삭제하고 다시 입력하시겠습니까?")) {
+                localStorage.removeItem("onepick_firebase_key");
+                location.reload();
+              }
+            }
+
+            // Auth Listener (함수로 분리)
+            function setupAuthListener() {
+              auth.onAuthStateChanged((user) => {
+                const loginSection = document.getElementById("admin-login-section");
+                const configSection = document.getElementById("admin-config-section");
+                const logoutBtn = document.getElementById("admin-logout-btn");
+
+                if (user && user.email === "ljb2727@gmail.com") {
+                  loginSection.classList.add("hidden");
+                  configSection.classList.remove("hidden");
+
+                  // Show Logout Button
+                  if (logoutBtn) logoutBtn.classList.remove("hidden");
+                  // Load Data
+                  loadConfig();
+                } else {
+                  // Not Admin
+                  if (user) {
+                    alert("관리자 계정이 아닙니다: " + user.email);
+                    auth.signOut();
+                  }
+                  // Show Login
+                  loginSection.classList.remove("hidden");
+                  configSection.classList.add("hidden");
+                  if (logoutBtn) logoutBtn.classList.add("hidden");
+                }
+              });
+            }
 
             // Admin Utils
             async function handleAdminLogin() {
@@ -646,20 +814,27 @@
             function renderConfig(data) {
               // Maintenance
               document.getElementById("maint-enabled").checked = data.maintenance?.enabled || false;
+
+              // KO
               document.getElementById("maint-title").value = data.maintenance?.title || "";
               document.getElementById("maint-message").value = data.maintenance?.message || "";
 
-              // Android Update Config
-              // 업데이트 활성화 여부 (showRecommended or enabled)
-              // 기존에 없던 필드라면 기본값 OFF
-              document.getElementById("update-enabled").checked = data.android?.showRecommended || false;
+              // EN (Optional)
+              document.getElementById("maint-title-en").value = data.maintenance?.title_en || "";
+              document.getElementById("maint-message-en").value = data.maintenance?.message_en || "";
 
+              // Android Update Config
+              document.getElementById("update-enabled").checked = data.android?.showRecommended || false;
               document.getElementById("android-force").checked = data.android?.forceUpdate || false;
               document.getElementById("android-latest-version").value = data.android?.latestVersion || "";
 
               const defaultStoreUrl = "https://play.google.com/store/apps/details?id=com.onepick.tarot";
               document.getElementById("android-url").value = data.android?.storeUrl || defaultStoreUrl;
+
+              // KO
               document.getElementById("android-msg").value = data.android?.message || "";
+              // EN
+              document.getElementById("android-msg-en").value = data.android?.message_en || "";
 
               // UI 상태 업데이트
               toggleExclusive(null);
@@ -714,14 +889,17 @@
                 maintenance: {
                   enabled: document.getElementById("maint-enabled").checked,
                   title: document.getElementById("maint-title").value,
-                  message: document.getElementById("maint-message").value
+                  message: document.getElementById("maint-message").value,
+                  title_en: document.getElementById("maint-title-en").value,
+                  message_en: document.getElementById("maint-message-en").value
                 },
                 android: {
-                  showRecommended: document.getElementById("update-enabled").checked, // 새로 추가된 업데이트 활성화 필드
+                  showRecommended: document.getElementById("update-enabled").checked,
                   forceUpdate: document.getElementById("android-force").checked,
                   latestVersion: document.getElementById("android-latest-version").value,
                   storeUrl: document.getElementById("android-url").value,
-                  message: document.getElementById("android-msg").value
+                  message: document.getElementById("android-msg").value,
+                  message_en: document.getElementById("android-msg-en").value
                 },
                 ios: { minVersion: "1.0.0", latestVersion: "1.0.0" }
               };
@@ -738,29 +916,7 @@
               }
             }
 
-            // Auth State Listener
-            auth.onAuthStateChanged((user) => {
-              const loginSection = document.getElementById("admin-login-section");
-              const configSection = document.getElementById("admin-config-section");
-              const logoutBtn = document.getElementById("admin-logout-btn");
 
-              if (user && user.email === "ljb2727@gmail.com") {
-                loginSection.classList.add("hidden");
-                configSection.classList.remove("hidden");
-
-                // Show Logout Button
-                if (logoutBtn) logoutBtn.classList.remove("hidden");
-
-                loadConfig();
-              } else {
-                // Not admin
-                loginSection.classList.remove("hidden");
-                configSection.classList.add("hidden");
-
-                // Hide Logout Button
-                if (logoutBtn) logoutBtn.classList.add("hidden");
-              }
-            });
           </script>
 </body>
 
